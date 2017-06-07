@@ -17,6 +17,7 @@
 import webapp2
 import jinja2
 import os
+import random
 
 JINJA_ENVIRONMENT = jinja2.Environment(
 loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -30,12 +31,17 @@ class MainHandler(webapp2.RequestHandler):
 
 class CountHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('I am in the count handler')
+        count_template = JINJA_ENVIRONMENT.get_template("templates/number.html")
+        user_fav_num = 27
+        self.response.write(count_template.render({"user_num":user_fav_num}))
 
 class FortuneHandler(webapp2.RequestHandler):
     def get(self):
+        user_name = "Human"
+        user_location = "Google"
         fortune_page = JINJA_ENVIRONMENT.get_template("templates/fortune.html")
-        self.response.write(fortune_page.render())
+        #fortune_page = JINJA_ENVIRONMENT.get_template("templates/GeoScience.html")
+        self.response.write(fortune_page.render({"name":user_name, "location":user_location}))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
