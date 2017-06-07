@@ -20,8 +20,8 @@ import os
 
 JINJA_ENVIRONMENT = jinja2.Environment(
 loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-extension=['jinja2.ext.autoescape'],
-autoescape=True
+extensions=['jinja2.ext.autoescape'],
+autoescape='true'
 )
 
 class MainHandler(webapp2.RequestHandler):
@@ -34,11 +34,11 @@ class CountHandler(webapp2.RequestHandler):
 
 class FortuneHandler(webapp2.RequestHandler):
     def get(self):
-        JINJA_ENVIRONMENT.get_template("templates/fortune.html")
+        fortune_page = JINJA_ENVIRONMENT.get_template("templates/fortune.html")
         self.response.write(fortune_page.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/count', CountHandler)
+    ('/count', CountHandler),
     ('/fortune', FortuneHandler)
 ], debug=True)
